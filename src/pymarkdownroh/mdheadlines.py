@@ -1,3 +1,5 @@
+"""Create markdown headline or title."""
+
 # Different headline levels. 
 # A headlinelevel is definded as a <hx></hx> in html.
 _HEADLINELEVEL = {
@@ -13,7 +15,7 @@ def create_headline(hlvl: int, string: str) -> str:
     """Create a title or headline with the specified text."""
 
     if not _verify_headline_lvl(hlvl):
-        return _HEADLINELEVEL[hlvl] + string
+        return _HEADLINELEVEL[hlvl] + " " + string
 
 
 def _verify_headline_lvl(hlvl: int):
