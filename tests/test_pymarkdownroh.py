@@ -4,6 +4,8 @@ import unittest
 
 from addimportdir import importdir,removedir
 
+from src.pymarkdownroh import MarkDown
+
 importdir()
 
 if __name__ == '__main__':
