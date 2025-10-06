@@ -2,3 +2,4 @@ vscode
 env
 TODO
 CHANGES
+__pycache__
