@@ -16,9 +16,10 @@ TESTS = {
     "BOLDITALIC_RESULTS":["***Test***"],
     # Emphasizing tests substring.
     "EMPHASIZING_SUB": ["Python is great."],
-    "BOLD_SUB_RESULTS": ["**Python** is great."],
-    "ITALIC_SUB_RESULTS": ["*Python* is great."],
-    "BOLDITALIC_SUB_RESULTS": ["***Python*** is great."],
+    # Tuple of (startposition, endposition, result).
+    "BOLD_SUB_RESULTS": [(0, 6, "**Python** is great.")],
+    "ITALIC_SUB_RESULTS": [(0, 6, "*Python* is great.")],
+    "BOLDITALIC_SUB_RESULTS": [(0, 6, "***Python*** is great.")],
 
     # Headline tests.
     "HEADLINES":["Title", "Lvl2 Headline", "Lvl3 Headline", "Lvl4 Headline", "Lvl5 Headline", "Lvl6 Headline"],
@@ -39,27 +40,33 @@ class TestPymarkdownroh_Emphasizing(unittest.TestCase):
 
     def test_bold_emphasizing(self):
         for i in range(len(TESTS["EMPHASIZING"])):
-            self.assertEqual(write_bold(TESTS["EMPHASIZING"][i]),TESTS["BOLD_RESULTS"][i])
+            testobj = MDFormat(string=TESTS["EMPHASIZING"][i])
+            self.assertEqual(testobj.write_bold(), TESTS["BOLD_RESULTS"][i])
 
     def test_italic_emphasizing(self):
         for i in range(len(TESTS["EMPHASIZING"])):
-            self.assertEqual(write_italics(TESTS["EMPHASIZING"][i]),TESTS["ITALIC_RESULTS"][i])
+            testobj = MDFormat(string=TESTS["EMPHASIZING"][i])
+            self.assertEqual(testobj.write_italic(), TESTS["ITALIC_RESULTS"][i])
 
     def test_bold_italic_emphasizing(self):
         for i in range(len(TESTS["EMPHASIZING"])):
-            self.assertEqual(write_bold_italic(TESTS["EMPHASIZING"][i]),TESTS["BOLDITALIC_RESULTS"][i])
+            testobj = MDFormat(string=TESTS["EMPHASIZING"][i])
+            self.assertEqual(testobj.write_bold_italic(), TESTS["BOLDITALIC_RESULTS"][i])
 
     def test_bold_emphasizing_substring(self):
         for i in range(len(TESTS["EMPHASIZING_SUB"])):
-            self.assertEqual(write_bold(TESTS["EMPHASIZING_SUB"][i], startbold=0, endbold=6), TESTS["BOLD_SUB_RESULTS"][i])
+            testobj = MDFormat(TESTS["EMPHASIZING_SUB"][i], TESTS["BOLD_SUB_RESULTS"][i][0], TESTS["BOLD_SUB_RESULTS"][i][1])
+            self.assertEqual(testobj.write_bold(), TESTS["BOLD_SUB_RESULTS"][i][2])
     
     def test_bold_emphasizing_substring(self):
         for i in range(len(TESTS["EMPHASIZING_SUB"])):
-            self.assertEqual(write_italics(TESTS["EMPHASIZING_SUB"][i], startitalic=0, enditalic=6), TESTS["ITALIC_SUB_RESULTS"][i])
+            testobj = MDFormat(TESTS["EMPHASIZING_SUB"][i], TESTS["ITALIC_SUB_RESULTS"][i][0], TESTS["ITALIC_SUB_RESULTS"][i][1])
+            self.assertEqual(testobj.write_italic(), TESTS["ITALIC_SUB_RESULTS"][i][2])
 
     def test_bold_emphasizing_substring(self):
         for i in range(len(TESTS["EMPHASIZING_SUB"])):
-            self.assertEqual(write_bold_italic(TESTS["EMPHASIZING_SUB"][i], startboldital=0, endboldital=6), TESTS["BOLDITALIC_SUB_RESULTS"][i])
+            testobj = MDFormat(TESTS["EMPHASIZING_SUB"][i], TESTS["BOLDITALIC_SUB_RESULTS"][i][0], TESTS["BOLDITALIC_SUB_RESULTS"][i][1])
+            self.assertEqual(testobj.write_bold_italic(), TESTS["BOLDITALIC_SUB_RESULTS"][i][2])
 
 class TestPymarkdownroh_Headlines(unittest.TestCase):
     """Test headline and title creation of pymarkdownroh module."""
@@ -76,7 +83,6 @@ class TestPymarkdownroh_Headlines(unittest.TestCase):
                 for i in range(len(TESTS["HEADLINES"])):
                     f.write(create_headline(i +1, TESTS["HEADLINES"][i]) + "\n")
     
-
 if __name__ == '__main__':
     # Verbose unittests.
     unittest.main(verbosity=2)

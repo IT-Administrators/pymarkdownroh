@@ -9,25 +9,32 @@ _EMPHASIZEKIND = {
     "boldItalic": f"{_EMPHASIZEPREF + _EMPHASIZEPREF+ _EMPHASIZEPREF}"
 }
 
-def write_bold(string: str, startbold: int = 0, endbold: int = 1000) -> str:
-    """Convert provided string to bold string."""
+class MDFormat:
+    """Class to write strings emphasized. You can write strings in bold, latin or both."""
 
-    _verify_range(startbold, endbold)
-    return string[:startbold] + _EMPHASIZEKIND["bold"] + string[startbold:endbold] + _EMPHASIZEKIND["bold"] + string[endbold:]
+    def __init__(self, string: str = "", start: int = 0, end: int = 1000):
+        self.string = string
+        self.start = start
+        self.end = end
 
-def write_italics(string: str, startitalic:int = 0, enditalic: int = 1000) -> str:
-    """Convert provided string to italic string."""
+    def write_bold(self) -> str:
+        """Convert provided string to bold string."""
 
-    _verify_range(startitalic, enditalic)
-    return string[:startitalic] + _EMPHASIZEKIND["italic"] + string[startitalic:enditalic] + _EMPHASIZEKIND["italic"] + string[enditalic:]
+        _verify_range(self.start, self.end)
+        return self.string[:self.start] + _EMPHASIZEKIND["bold"] + self.string[self.start:self.end] + _EMPHASIZEKIND["bold"] + self.string[self.end:]
+
+    def write_italic(self) -> str:
+        """Convert provided self.string to italic self.string."""
+
+        _verify_range(self.start, self.end)
+        return self.string[:self.start] + _EMPHASIZEKIND["italic"] + self.string[self.start:self.end] + _EMPHASIZEKIND["italic"] + self.string[self.end:]
 
 
-def write_bold_italic(string: str, startboldital: int = 0, endboldital: int = 1000) -> str:
-    """Convert provided string to italic and bold."""
+    def write_bold_italic(self) -> str:
+        """Convert provided self.string to italic and bold."""
 
-    _verify_range(startboldital, endboldital)
-    return string[:startboldital] + _EMPHASIZEKIND["boldItalic"] + string[startboldital:endboldital] + _EMPHASIZEKIND["boldItalic"] + string[endboldital:]
-
+        _verify_range(self.start, self.end)
+        return self.string[:self.start] + _EMPHASIZEKIND["boldItalic"] + self.string[self.start:self.end] + _EMPHASIZEKIND["boldItalic"] + self.string[self.end:]
 
 def _verify_range(start: int, end: int) -> Exception:
     if end < start:
