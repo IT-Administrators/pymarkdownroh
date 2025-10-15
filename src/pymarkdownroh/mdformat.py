@@ -36,6 +36,10 @@ class MDFormat:
         _verify_range(self.start, self.end)
         return self.string[:self.start] + _EMPHASIZEKIND["boldItalic"] + self.string[self.start:self.end] + _EMPHASIZEKIND["boldItalic"] + self.string[self.end:]
 
+    @staticmethod
+    def create_horizontal_rule():
+        return str(_EMPHASIZEPREF + " " + _EMPHASIZEPREF + " " +_EMPHASIZEPREF)
+
 def _verify_range(start: int, end: int) -> Exception:
     if end < start:
         raise ValueError(f"End {end} smaller than Start {start}.")

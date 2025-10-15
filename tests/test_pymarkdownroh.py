@@ -27,6 +27,8 @@ string."""],
     "ITALIC_SUB_RESULTS": [(0, 6, "*Python* is great.")],
     "BOLDITALIC_SUB_RESULTS": [(0, 6, "***Python*** is great.")],
 
+    "HORIZONTALRULE_RESULT": ["* * *"],
+
     # Headline tests.
     "HEADLINES":["Title", "Lvl2 Headline", "Lvl3 Headline", "Lvl4 Headline", "Lvl5 Headline", "Lvl6 Headline"],
     "HEADLINE_RESULTS":["# Title", "## Lvl2 Headline", "### Lvl3 Headline", "#### Lvl4 Headline", "##### Lvl5 Headline", "###### Lvl6 Headline"]
@@ -74,6 +76,10 @@ class TestPymarkdownroh_Emphasizing(unittest.TestCase):
         for i in range(len(TESTS["EMPHASIZING_SUB"])):
             testobj = MDFormat(TESTS["EMPHASIZING_SUB"][i], TESTS["BOLDITALIC_SUB_RESULTS"][i][0], TESTS["BOLDITALIC_SUB_RESULTS"][i][1])
             self.assertEqual(testobj.write_bold_italic(), TESTS["BOLDITALIC_SUB_RESULTS"][i][2])
+
+    def test_horizontal_rule(self):
+        for i in range(len(TESTS["HORIZONTALRULE_RESULT"])):
+            self.assertEqual(MDFormat.create_horizontal_rule(), TESTS["HORIZONTALRULE_RESULT"][i])
 
 class TestPymarkdownroh_Headlines(unittest.TestCase):
     """Test headline and title creation of pymarkdownroh module."""
