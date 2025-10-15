@@ -9,11 +9,15 @@ from src.pymarkdownroh import *
 importdir()
 
 TESTS = {
+    # Blockquoting the provided string.
+    "BLOCKSTRING": ["This is a blockquote."],
+    "BLOCKQUOTE_RESULT": ["> This is a blockquote."],
+
     # Emphasizing tests whole string.
-    "EMPHASIZING":["Test"],
-    "BOLD_RESULTS":["**Test**"],
-    "ITALIC_RESULTS":["*Test*"],
-    "BOLDITALIC_RESULTS":["***Test***"],
+    "EMPHASIZING": ["Test"],
+    "BOLD_RESULTS": ["**Test**"],
+    "ITALIC_RESULTS": ["*Test*"],
+    "BOLDITALIC_RESULTS": ["***Test***"],
     # Emphasizing tests substring.
     "EMPHASIZING_SUB": ["Python is great."],
     # Tuple of (startposition, endposition, result).
@@ -27,6 +31,7 @@ TESTS = {
 }
 
 EXAMPLEFILES = {
+    "BLOCKQUOTES": "./examples/BLOCKQUOTES.md",
     "EMPHASIZING": "./examples/EMPHASIZE.md",
     "HEADLINES": "./examples/HEADLINES.md",
     "TABLES": "./examples/TABLES.md"
@@ -83,6 +88,16 @@ class TestPymarkdownroh_Headlines(unittest.TestCase):
                 for i in range(len(TESTS["HEADLINES"])):
                     f.write(create_headline(i +1, TESTS["HEADLINES"][i]) + "\n")
     
+class TestPymarkdownroh_Blockquotes(unittest.TestCase):
+    """Test blockquote creation of pymarkdownroh module."""
+
+    def setUp(self):
+        self.tests = TESTS
+
+    def test_blockquote(self):
+        for i in range(len(TESTS["BLOCKSTRING"])):
+            self.assertEqual(create_blockquote(TESTS["BLOCKSTRING"][i]), TESTS["BLOCKQUOTE_RESULT"][i])
+
 if __name__ == '__main__':
     # Verbose unittests.
     unittest.main(verbosity=2)
