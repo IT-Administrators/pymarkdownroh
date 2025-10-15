@@ -10,8 +10,10 @@ importdir()
 
 TESTS = {
     # Blockquoting the provided string.
-    "BLOCKSTRING": ["This is a blockquote."],
-    "BLOCKQUOTE_RESULT": ["> This is a blockquote."],
+    "BLOCKSTRING": ["This is a blockquote.","""This is a multiline
+string."""],
+    "BLOCKQUOTE_RESULT": ["> This is a blockquote.","""> This is a multiline
+> string."""],
 
     # Emphasizing tests whole string.
     "EMPHASIZING": ["Test"],

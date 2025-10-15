@@ -21,4 +21,5 @@ def create_blockquote(string: str) -> str:
             res += "> " + delimiter
         res += "> " + l + delimiter
 
-    return res
+    # Strip newline characters from end of string.
+    return res.strip()
