@@ -19,6 +19,9 @@ class MDLink:
 
         \[linktext](url)
         """
+        # Check if title is set. If so return markdown link with title.
+        if not self.title == "" or not self.title == None:
+            return "[" + self.linktext + "]" + "(" + self.url + " " + '"' + self.title + '"' + ")"
         
         return "[" + self.linktext + "]" + "(" + self.url + ")"
     
@@ -30,6 +33,9 @@ class MDLink:
         
         \[linkname]: [url]
         """
+        # Check if title is set. If so return markdown link with title.
+        if not self.title == "" or not self.title == None:
+            return _create_reference_text_name(self.linktext, self.linkname) + "\n" + "\n" + _create_reference_name_url(self.linkname, self.url, self.title)
 
         return _create_reference_text_name(self.linktext, self.linkname) + "\n" + "\n" + _create_reference_name_url(self.linkname, self.url)
 
@@ -44,11 +50,15 @@ def _create_reference_text_name(linktext:str, linkname: str) -> str:
 
     return "[" + linktext + "]" + "[" + str(linkname) + "]"
 
-def _create_reference_name_url(linkname:str, url: str) -> str:
+def _create_reference_name_url(linkname:str, url: str, title:str = None) -> str:
     """
     Create the link to the given reference.
     
     \[linkname]: [url]
     """
 
-    return "[" + str(linkname) + "]" + ":" + " " + "(" + url + ")"
+    # Check if title is set. If so return markdown link with title.
+    if not title == "" or not title == None:
+        return "[" + str(linkname) + "]" + ":" + " " + url + " " + "(" + title + ")"
+
+    return "[" + str(linkname) + "]" + ":" + " " + url
