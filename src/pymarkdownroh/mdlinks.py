@@ -39,6 +39,17 @@ class MDLink:
 
         return _create_reference_text_name(self.linktext, self.linkname) + "\n" + "\n" + _create_reference_name_url(self.linkname, self.url)
 
+    def create_automatic_link(self) -> str:
+        """
+        Create an automatic link.
+
+        Shows the actual text of a link or email and make it clickable.
+
+        <url/email>
+        """
+
+        return "<" + self.url + ">"
+
 def _create_reference_text_name(linktext:str, linkname: str) -> str:
     """
     Create a reference to the given link.
