@@ -30,9 +30,21 @@ string."""],
     "HORIZONTALRULE_RESULT": ["* * *"],
 
     # Headline tests.
-    "HEADLINES":["Title", "Lvl2 Headline", "Lvl3 Headline", "Lvl4 Headline", "Lvl5 Headline", "Lvl6 Headline"],
-    "HEADLINE_RESULTS":["# Title", "## Lvl2 Headline", "### Lvl3 Headline", "#### Lvl4 Headline", "##### Lvl5 Headline", "###### Lvl6 Headline"]
-}
+    "HEADLINES": ["Title", "Lvl2 Headline", "Lvl3 Headline", "Lvl4 Headline", "Lvl5 Headline", "Lvl6 Headline"],
+    "HEADLINE_RESULTS": ["# Title", "## Lvl2 Headline", "### Lvl3 Headline", "#### Lvl4 Headline", "##### Lvl5 Headline", "###### Lvl6 Headline"],
+
+    # Link tests.
+    # list[tuple(linktext, url, linktitle)]
+    "INLINE_LINKS": [("An Example","www.example.com","Example Title"),
+                     ("An Example","www.example.com", "")],
+    "INLINE_LINKS_RESULTS": ["[An Example](www.example.com \"Example Title\")",
+                             "[An Example](www.example.com)"],
+    "AUTOMATED_LINKS": ["http://www.example.com","example@example.com"],
+    "AUTOMATED_LINKS_RESULTS": ["<http://www.example.com>", "<example@example.com>"],
+    # list[tuple(linktext, linkname, url, linktitle)]
+    "REFERENCE_LINKS": [("Link Text","Link Name","www.example.com","Link Title"),
+                        ("Link Text","Link Name","www.example.com","")],
+    "REFERENCE_LINKS_RESULTS": ["[Link Text][Link Name]\n\n[Link Name]: www.example.com (Link Title)", "[Link Text][Link Name]\n\n[Link Name]: www.example.com"]}
 
 EXAMPLEFILES = {
     "BLOCKQUOTES": "./examples/BLOCKQUOTES.md",
@@ -105,6 +117,29 @@ class TestPymarkdownroh_Blockquotes(unittest.TestCase):
     def test_blockquote(self):
         for i in range(len(TESTS["BLOCKSTRING"])):
             self.assertEqual(create_blockquote(TESTS["BLOCKSTRING"][i]), TESTS["BLOCKQUOTE_RESULT"][i])
+
+class TestPymarkdownroh_Links(unittest.TestCase):
+    """Test link creation or pymarkdownroh module."""
+
+    def setUp(self):
+        self.tests = TESTS
+
+    def test_inline_link(self):
+        for i in range(len(TESTS["INLINE_LINKS"])):
+            link = MDLink(linktext= TESTS["INLINE_LINKS"][i][0], url= TESTS["INLINE_LINKS"][i][1], title= TESTS["INLINE_LINKS"][i][2])
+            self.assertEqual(link.create_inline_link(), TESTS["INLINE_LINKS_RESULTS"][i])
+
+    def test_automated_link(self):
+        for i in range(len(TESTS["AUTOMATED_LINKS"])):
+            link = MDLink(url = TESTS["AUTOMATED_LINKS"][i])
+            self.assertEqual(link.create_automatic_link(), TESTS["AUTOMATED_LINKS_RESULTS"][i])
+
+    def test_reference_link(self):
+        for i in range(len(TESTS["REFERENCE_LINKS"])):
+
+            link = MDLink(linktext=TESTS["REFERENCE_LINKS"][i][0], linkname= TESTS["REFERENCE_LINKS"][i][1], url= TESTS["REFERENCE_LINKS"][i][2], title=TESTS["REFERENCE_LINKS"][i][3])
+            self.assertEqual(link.create_reference_link(), TESTS["REFERENCE_LINKS_RESULTS"][i])
+
 
 if __name__ == '__main__':
     # Verbose unittests.
