@@ -8,12 +8,12 @@ class MDImage(MDLink):
     def __init__(self, linktext: str, url: str, title:str, linkname: str | int = 1):
         super().__init__(linktext, url, title, linkname)
 
-    def create_inline_image_link(self):
+    def create_inline_link(self):
         """Create inline image link."""
 
         return "!" + super().create_inline_link()
     
-    def create_reference_image_link(self):
+    def create_reference_link(self):
         """Create image reference link."""
 
         return "!" + super().create_reference_link()

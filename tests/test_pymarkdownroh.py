@@ -165,8 +165,8 @@ class TestPymarkdownroh_Links(unittest.TestCase):
 
     def test_automated_link(self):
         for i in range(len(TESTS["AUTOMATED_LINKS"])):
-            link = MDLink(url = TESTS["AUTOMATED_LINKS"][i])
-            self.assertEqual(link.create_automatic_link(), TESTS["AUTOMATED_LINKS_RESULTS"][i])
+            link = MDLink()
+            self.assertEqual(link.create_automatic_link(TESTS["AUTOMATED_LINKS"][i]), TESTS["AUTOMATED_LINKS_RESULTS"][i])
 
         # Currently not appending strings to file. Unknown why, because file is writable.
         # with open(EXAMPLEFILES["LINKS"],"a") as f:
@@ -184,23 +184,23 @@ class TestPymarkdownroh_Images(unittest.TestCase):
     def test_inline_image_link(self):
         for i in range(len(TESTS["INLINE_IMAGES"])):
             image = MDImage(linktext= TESTS["INLINE_IMAGES"][i][0], url= TESTS["INLINE_IMAGES"][i][1], title= TESTS["INLINE_IMAGES"][i][2])
-            self.assertEqual(image.create_inline_image_link(), TESTS["INLINE_IMAGES_RESULT"][i])
+            self.assertEqual(image.create_inline_link(), TESTS["INLINE_IMAGES_RESULT"][i])
 
         with open(EXAMPLEFILES["IMAGES"], "w") as f:
             for i in range(len(TESTS["INLINE_IMAGES"])):
                 image = MDImage(linktext= TESTS["INLINE_IMAGES"][i][0], url= TESTS["INLINE_IMAGES"][i][1], title= TESTS["INLINE_IMAGES"][i][2])
-                f.write(image.create_inline_image_link() + "\n")
+                f.write(image.create_inline_link() + "\n")
                 f.write("\n")
 
     def test_reference_image_link(self):
         for i in range(len(TESTS["REFERENCE_IMAGES"])):
             image = MDImage(linktext= TESTS["REFERENCE_IMAGES"][i][0], linkname= TESTS["REFERENCE_IMAGES"][i][1], url= TESTS["REFERENCE_IMAGES"][i][2], title= TESTS["REFERENCE_IMAGES"][i][3])
-            self.assertEqual(image.create_reference_image_link(), TESTS["REFERENCE_IMAGES_RESULTS"][i])
+            self.assertEqual(image.create_reference_link(), TESTS["REFERENCE_IMAGES_RESULTS"][i])
 
         with open(EXAMPLEFILES["IMAGES"], "a") as f:
             for i in range(len(TESTS["REFERENCE_IMAGES"])):
                 image = MDImage(linktext= TESTS["REFERENCE_IMAGES"][i][0], linkname= TESTS["REFERENCE_IMAGES"][i][1], url= TESTS["REFERENCE_IMAGES"][i][2], title= TESTS["REFERENCE_IMAGES"][i][3])
-                f.write(image.create_reference_image_link() + "\n")
+                f.write(image.create_reference_link() + "\n")
                 f.write("\n")
 
 if __name__ == '__main__':

@@ -47,7 +47,8 @@ class MDLink:
 
         return _create_reference_text_name(self.linktext, self.linkname) + "\n" + "\n" + _create_reference_name_url(self.linkname, self.url)
 
-    def create_automatic_link(self) -> str:
+    @staticmethod
+    def create_automatic_link(string: str) -> str:
         """
         Create an automatic link.
 
@@ -59,13 +60,14 @@ class MDLink:
         # Check if it is valid url or mail.
         mailpattern = r'^[A-Za-z0-9]+[\._]?[A-Za-z0-9]+[@]\w+[.]\w+$'
         
-        if self.url.startswith("http:") or self.url.startswith("https:"):
-            return "<" + urlparse(self.url).geturl() + ">"
+        if string.startswith("http:") or string.startswith("https:"):
+            return "<" + urlparse(string).geturl() + ">"
         
-        elif re.match(mailpattern, self.url):
-            return "<" + self.url + ">"
+        elif re.match(mailpattern, string):
+            return "<" + string + ">"
         
-        return "<" + self.url + ">"
+        else:
+            raise ValueError(f"Need valid url or email got <{string}>.")
 
 def _create_reference_text_name(linktext:str, linkname: str) -> str:
     """
