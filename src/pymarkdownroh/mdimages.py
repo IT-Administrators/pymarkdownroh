@@ -18,7 +18,3 @@ class MDImage(MDLink):
         """Create image reference link."""
 
         return "!" + super().create_reference_link()
-    
-    # As images do not support automated links, the parent method is overridden to raise exception.
-    def create_automatic_link(self) -> Exception:
-        raise NotImplementedError("Not implemented.")

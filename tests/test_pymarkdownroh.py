@@ -2,11 +2,7 @@
 
 import unittest
 
-# from addimportdir import importdir,removedir
-
 from src.pymarkdownroh import *
-
-# importdir()
 
 TESTS = {
     # Blockquoting the provided string.
@@ -165,14 +161,12 @@ class TestPymarkdownroh_Links(unittest.TestCase):
 
     def test_automated_link(self):
         for i in range(len(TESTS["AUTOMATED_LINKS"])):
-            link = MDLink()
-            self.assertEqual(link.create_automatic_link(TESTS["AUTOMATED_LINKS"][i]), TESTS["AUTOMATED_LINKS_RESULTS"][i])
+            self.assertEqual(create_automatic_link(TESTS["AUTOMATED_LINKS"][i]), TESTS["AUTOMATED_LINKS_RESULTS"][i])
 
-        # Currently not appending strings to file. Unknown why, because file is writable.
+        # # Currently not appending strings to file. Unknown why, because file is writable.
         # with open(EXAMPLEFILES["LINKS"],"a") as f:
         #     for i in range(len(TESTS["AUTOMATED_LINKS"])):
-        #         link = MDLink(url = TESTS["AUTOMATED_LINKS"][i])
-        #         f.write(link.create_automatic_link() + "\n")
+        #         f.write(str(create_automatic_link(TESTS["AUTOMATED_LINKS"][i])) + "\n")
         #         f.write("\n")
 
 class TestPymarkdownroh_Images(unittest.TestCase):
@@ -206,4 +200,3 @@ class TestPymarkdownroh_Images(unittest.TestCase):
 if __name__ == '__main__':
     # Verbose unittests.
     unittest.main(verbosity=2)
-    # removedir()
