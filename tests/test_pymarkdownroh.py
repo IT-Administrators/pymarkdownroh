@@ -43,14 +43,31 @@ string."""],
     "AUTOMATED_LINKS_RESULTS": ["<http://www.example.com>", "<example@example.com>"],
     # list[tuple(linktext, linkname, url, linktitle)]
     "REFERENCE_LINKS": [("Link Text","Link Name","www.example.com","Link Title"),
-                        ("Link Text","Link Name","www.example.com","")],
-    "REFERENCE_LINKS_RESULTS": ["[Link Text][Link Name]\n\n[Link Name]: www.example.com (Link Title)", "[Link Text][Link Name]\n\n[Link Name]: www.example.com"]}
+                        ("Link Text2","Link Name2","www.example.com","")],
+    "REFERENCE_LINKS_RESULTS": ["[Link Text][Link Name]\n\n[Link Name]: www.example.com (Link Title)",
+                                "[Link Text2][Link Name2]\n\n[Link Name2]: www.example.com"],
+
+    # Image tests.
+    # list[tuple(linktext, url, linktitle)]
+    "INLINE_IMAGES": [("Example Image","/examples/TestScreenshot.png","Example Image"),
+                      ("Example Image","/examples/TestScreenshot.png","")],
+    "INLINE_IMAGES_RESULT": ["![Example Image](/examples/TestScreenshot.png \"Example Image\")",
+                             "![Example Image](/examples/TestScreenshot.png)"],
+    # list[tuple(linktext, linkname, url, linktitle)]
+    "REFERENCE_IMAGES": [("Example Image","Image Name","/examples/TestScreenshot.png","Example Image"),
+                         ("Example Image","Image Name2","/examples/TestScreenshot.png","")],
+    "REFERENCE_IMAGES_RESULTS": ["![Example Image][Image Name]\n\n[Image Name]: /examples/TestScreenshot.png (Example Image)",
+                                 "![Example Image][Image Name2]\n\n[Image Name2]: /examples/TestScreenshot.png"]
+    
+    }
 
 EXAMPLEFILES = {
     "BLOCKQUOTES": "./examples/BLOCKQUOTES.md",
     "EMPHASIZING": "./examples/EMPHASIZE.md",
     "HEADLINES": "./examples/HEADLINES.md",
-    "TABLES": "./examples/TABLES.md"
+    "IMAGES": "./examples/IMAGES.md",
+    "LINKS": "./examples/LINKS.md"
+    # "TABLES": "./examples/TABLES.md"
 }
 
 class TestPymarkdownroh_Emphasizing(unittest.TestCase):
@@ -119,7 +136,7 @@ class TestPymarkdownroh_Blockquotes(unittest.TestCase):
             self.assertEqual(create_blockquote(TESTS["BLOCKSTRING"][i]), TESTS["BLOCKQUOTE_RESULT"][i])
 
 class TestPymarkdownroh_Links(unittest.TestCase):
-    """Test link creation or pymarkdownroh module."""
+    """Test link creation of pymarkdownroh module."""
 
     def setUp(self):
         self.tests = TESTS
@@ -129,17 +146,62 @@ class TestPymarkdownroh_Links(unittest.TestCase):
             link = MDLink(linktext= TESTS["INLINE_LINKS"][i][0], url= TESTS["INLINE_LINKS"][i][1], title= TESTS["INLINE_LINKS"][i][2])
             self.assertEqual(link.create_inline_link(), TESTS["INLINE_LINKS_RESULTS"][i])
 
+        with open(EXAMPLEFILES["LINKS"], "w") as f:
+            for i in range(len(TESTS["INLINE_LINKS"])):
+                link = MDLink(linktext= TESTS["INLINE_LINKS"][i][0], url= TESTS["INLINE_LINKS"][i][1], title= TESTS["INLINE_LINKS"][i][2])
+                f.write(link.create_inline_link() + "\n")
+                f.write("\n")
+            
+    def test_reference_link(self):
+        for i in range(len(TESTS["REFERENCE_LINKS"])):
+            link = MDLink(linktext=TESTS["REFERENCE_LINKS"][i][0], linkname= TESTS["REFERENCE_LINKS"][i][1], url= TESTS["REFERENCE_LINKS"][i][2], title=TESTS["REFERENCE_LINKS"][i][3])
+            self.assertEqual(link.create_reference_link(), TESTS["REFERENCE_LINKS_RESULTS"][i])
+       
+        with open(EXAMPLEFILES["LINKS"],"a") as f:
+            for i in range(len(TESTS["REFERENCE_LINKS"])):
+                link = MDLink(linktext=TESTS["REFERENCE_LINKS"][i][0], linkname= TESTS["REFERENCE_LINKS"][i][1], url= TESTS["REFERENCE_LINKS"][i][2], title=TESTS["REFERENCE_LINKS"][i][3])
+                f.write(link.create_reference_link() + "\n")
+                f.write("\n")
+
     def test_automated_link(self):
         for i in range(len(TESTS["AUTOMATED_LINKS"])):
             link = MDLink(url = TESTS["AUTOMATED_LINKS"][i])
             self.assertEqual(link.create_automatic_link(), TESTS["AUTOMATED_LINKS_RESULTS"][i])
 
-    def test_reference_link(self):
-        for i in range(len(TESTS["REFERENCE_LINKS"])):
+        # Currently not appending strings to file. Unknown why, because file is writable.
+        # with open(EXAMPLEFILES["LINKS"],"a") as f:
+        #     for i in range(len(TESTS["AUTOMATED_LINKS"])):
+        #         link = MDLink(url = TESTS["AUTOMATED_LINKS"][i])
+        #         f.write(link.create_automatic_link() + "\n")
+        #         f.write("\n")
 
-            link = MDLink(linktext=TESTS["REFERENCE_LINKS"][i][0], linkname= TESTS["REFERENCE_LINKS"][i][1], url= TESTS["REFERENCE_LINKS"][i][2], title=TESTS["REFERENCE_LINKS"][i][3])
-            self.assertEqual(link.create_reference_link(), TESTS["REFERENCE_LINKS_RESULTS"][i])
+class TestPymarkdownroh_Images(unittest.TestCase):
+    """Test image link creation of pymarkdownroh module."""
 
+    def setUp(self):
+        self.tests = TESTS
+
+    def test_inline_image_link(self):
+        for i in range(len(TESTS["INLINE_IMAGES"])):
+            image = MDImage(linktext= TESTS["INLINE_IMAGES"][i][0], url= TESTS["INLINE_IMAGES"][i][1], title= TESTS["INLINE_IMAGES"][i][2])
+            self.assertEqual(image.create_inline_image_link(), TESTS["INLINE_IMAGES_RESULT"][i])
+
+        with open(EXAMPLEFILES["IMAGES"], "w") as f:
+            for i in range(len(TESTS["INLINE_IMAGES"])):
+                image = MDImage(linktext= TESTS["INLINE_IMAGES"][i][0], url= TESTS["INLINE_IMAGES"][i][1], title= TESTS["INLINE_IMAGES"][i][2])
+                f.write(image.create_inline_image_link() + "\n")
+                f.write("\n")
+
+    def test_reference_image_link(self):
+        for i in range(len(TESTS["REFERENCE_IMAGES"])):
+            image = MDImage(linktext= TESTS["REFERENCE_IMAGES"][i][0], linkname= TESTS["REFERENCE_IMAGES"][i][1], url= TESTS["REFERENCE_IMAGES"][i][2], title= TESTS["REFERENCE_IMAGES"][i][3])
+            self.assertEqual(image.create_reference_image_link(), TESTS["REFERENCE_IMAGES_RESULTS"][i])
+
+        with open(EXAMPLEFILES["IMAGES"], "a") as f:
+            for i in range(len(TESTS["REFERENCE_IMAGES"])):
+                image = MDImage(linktext= TESTS["REFERENCE_IMAGES"][i][0], linkname= TESTS["REFERENCE_IMAGES"][i][1], url= TESTS["REFERENCE_IMAGES"][i][2], title= TESTS["REFERENCE_IMAGES"][i][3])
+                f.write(image.create_reference_image_link() + "\n")
+                f.write("\n")
 
 if __name__ == '__main__':
     # Verbose unittests.
