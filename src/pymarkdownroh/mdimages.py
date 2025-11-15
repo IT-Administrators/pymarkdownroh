@@ -1,5 +1,6 @@
 """Create markdown image links."""
 
+# from .mdlinks import MDLink
 from .mdlinks import MDLink
 
 class MDImage(MDLink):
@@ -8,12 +9,16 @@ class MDImage(MDLink):
     def __init__(self, linktext: str, url: str, title:str, linkname: str | int = 1):
         super().__init__(linktext, url, title, linkname)
 
-    def create_inline_link(self):
+    def create_inline_link(self) -> str:
         """Create inline image link."""
 
         return "!" + super().create_inline_link()
     
-    def create_reference_link(self):
+    def create_reference_link(self) -> str:
         """Create image reference link."""
 
         return "!" + super().create_reference_link()
+    
+    # As images do not support automated links, the parent method is overridden to raise exception.
+    def create_automatic_link(self) -> Exception:
+        raise NotImplementedError("Not implemented.")

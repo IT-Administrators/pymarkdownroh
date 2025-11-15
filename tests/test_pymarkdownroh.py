@@ -2,11 +2,11 @@
 
 import unittest
 
-from addimportdir import importdir,removedir
+# from addimportdir import importdir,removedir
 
 from src.pymarkdownroh import *
 
-importdir()
+# importdir()
 
 TESTS = {
     # Blockquoting the provided string.
@@ -206,4 +206,4 @@ class TestPymarkdownroh_Images(unittest.TestCase):
 if __name__ == '__main__':
     # Verbose unittests.
     unittest.main(verbosity=2)
-    removedir()
+    # removedir()
