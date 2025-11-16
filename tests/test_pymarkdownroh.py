@@ -53,16 +53,23 @@ string."""],
     "REFERENCE_IMAGES": [("Example Image","Image Name","/examples/TestScreenshot.png","Example Image"),
                          ("Example Image","Image Name2","/examples/TestScreenshot.png","")],
     "REFERENCE_IMAGES_RESULTS": ["![Example Image][Image Name]\n\n[Image Name]: /examples/TestScreenshot.png (Example Image)",
-                                 "![Example Image][Image Name2]\n\n[Image Name2]: /examples/TestScreenshot.png"]
-    
+                                 "![Example Image][Image Name2]\n\n[Image Name2]: /examples/TestScreenshot.png"],
+    # Codespan tests.
+    # list[(string, start, end, word)]
+    "CODESPAN:": [("Use the printf() function.",0,1000,"printf()"),
+                  ("Use the printf() function.",8,14,None)],
+    "CODESPAN_RESULTS": ["Use the `printf()` function.",
+                         "Use the `printf`() function."]
     }
 
 EXAMPLEFILES = {
     "BLOCKQUOTES": "./examples/BLOCKQUOTES.md",
+    "CODESPAN": "./examples/CODESPAN.md",
     "EMPHASIZING": "./examples/EMPHASIZE.md",
     "HEADLINES": "./examples/HEADLINES.md",
     "IMAGES": "./examples/IMAGES.md",
-    "LINKS": "./examples/LINKS.md"
+    "LINKS": "./examples/LINKS.md",
+    # "LISTS": "./example/LISTS.md"
     # "TABLES": "./examples/TABLES.md"
 }
 
@@ -195,6 +202,22 @@ class TestPymarkdownroh_Images(unittest.TestCase):
             for i in range(len(TESTS["REFERENCE_IMAGES"])):
                 image = MDImage(linktext= TESTS["REFERENCE_IMAGES"][i][0], linkname= TESTS["REFERENCE_IMAGES"][i][1], url= TESTS["REFERENCE_IMAGES"][i][2], title= TESTS["REFERENCE_IMAGES"][i][3])
                 f.write(image.create_reference_link() + "\n")
+                f.write("\n")
+
+class TestPymarkdownroh_CodeSpam(unittest.TestCase):
+    """Test codespan of pymarkdownroh module.."""
+
+    def setUp(self):
+        self.tests = TESTS
+
+    def test_codespan_word(self):
+        for i in range(len(TESTS["CODESPAN:"])):
+            # print(create_code_span(string= TESTS["CODESPAN:"][i][0], start= TESTS["CODESPAN:"][i][1], end= TESTS["CODESPAN:"][i][2], word= TESTS["CODESPAN:"][i][3]))
+            self.assertEqual(create_code_span(string= TESTS["CODESPAN:"][i][0], start= TESTS["CODESPAN:"][i][1], end= TESTS["CODESPAN:"][i][2], word= TESTS["CODESPAN:"][i][3]), TESTS["CODESPAN_RESULTS"][i])
+
+        with open(EXAMPLEFILES["CODESPAN"], "w") as f:
+            for i in range(len(TESTS["CODESPAN:"])):
+                f.write(create_code_span(string= TESTS["CODESPAN:"][i][0], start= TESTS["CODESPAN:"][i][1], end= TESTS["CODESPAN:"][i][2], word= TESTS["CODESPAN:"][i][3]) + "\n")
                 f.write("\n")
 
 if __name__ == '__main__':
