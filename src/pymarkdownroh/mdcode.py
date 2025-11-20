@@ -18,10 +18,10 @@ def create_code_span(string: str, start: int = 0, end: int = 1000, word: str = N
 
         match = re.search(word, string)
         
-        return string[:match.span()[0]] + "`" + string[match.span()[0]:match.span()[0] + len(word)] + "`" + string[match.span()[0] + len(word):]
+        return string[:match.span()[0]] + _CODESPANINDICATOR + string[match.span()[0]:match.span()[0] + len(word)] + _CODESPANINDICATOR + string[match.span()[0] + len(word):]
 
     elif word == None or word not in string:
 
-        return string[:start] + "`" + string[start:end] + "`" + string[end:]
+        return string[:start] + _CODESPANINDICATOR + string[start:end] + _CODESPANINDICATOR + string[end:]
 
-    return "`" + string + "`"
+    return _CODESPANINDICATOR + string + _CODESPANINDICATOR
