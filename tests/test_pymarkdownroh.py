@@ -59,7 +59,39 @@ string."""],
     "CODESPAN:": [("Use the printf() function.",0,1000,"printf()"),
                   ("Use the printf() function.",8,14,None)],
     "CODESPAN_RESULTS": ["Use the `printf()` function.",
-                         "Use the `printf`() function."]
+                         "Use the `printf`() function."],
+
+    # List tests.
+    # List[tuple(input, ordered, checklist)]
+    "LISTS": [
+    (["Apples", "Bananas", "Cherries"], False, False),
+    
+    ([{"Programming Languages": ["Python", "JavaScript", "Rust"],
+    "Databases": ["PostgreSQL", "MongoDB"]}],True, False),
+    
+    ([("Install Python", True),
+    ("Set up virtualenv", False),
+    {"Project Setup": [
+        ("Create repo", True),
+        ("Write README", False)
+    ]},
+    ("Push to GitHub", False)], False, True),
+
+    ([("Book flights", False),
+    ("Reserve hotel", True),
+    {"Packing": [
+        ("Clothes", False),
+        ("Toiletries", True),
+        ("Laptop", False)
+    ]},
+    ("Check-in online", False)],True, True),
+
+    ],
+    "LISTS_RESULT": ["- Apples\n- Bananas\n- Cherries",
+                     "1. Programming Languages\n    1. Python\n    1. JavaScript\n    1. Rust\n1. Databases\n    1. PostgreSQL\n    1. MongoDB",
+                     "- [x] Install Python\n- [ ] Set up virtualenv\n- [ ] Project Setup\n    - [x] Create repo\n    - [ ] Write README\n- [ ] Push to GitHub",
+                     "1. [ ] Book flights\n1. [x] Reserve hotel\n1. [ ] Packing\n    1. [ ] Clothes\n    1. [x] Toiletries\n    1. [ ] Laptop\n1. [ ] Check-in online",
+    ]
     }
 
 EXAMPLEFILES = {
@@ -69,7 +101,7 @@ EXAMPLEFILES = {
     "HEADLINES": "./examples/HEADLINES.md",
     "IMAGES": "./examples/IMAGES.md",
     "LINKS": "./examples/LINKS.md",
-    # "LISTS": "./example/LISTS.md"
+    "LISTS": "./example/LISTS.md"
     # "TABLES": "./examples/TABLES.md"
 }
 
@@ -204,7 +236,7 @@ class TestPymarkdownroh_Images(unittest.TestCase):
                 f.write(image.create_reference_link() + "\n")
                 f.write("\n")
 
-class TestPymarkdownroh_CodeSpam(unittest.TestCase):
+class TestPymarkdownroh_CodeSpan(unittest.TestCase):
     """Test codespan of pymarkdownroh module.."""
 
     def setUp(self):
@@ -219,6 +251,24 @@ class TestPymarkdownroh_CodeSpam(unittest.TestCase):
             for i in range(len(TESTS["CODESPAN:"])):
                 f.write(create_code_span(string= TESTS["CODESPAN:"][i][0], start= TESTS["CODESPAN:"][i][1], end= TESTS["CODESPAN:"][i][2], word= TESTS["CODESPAN:"][i][3]) + "\n")
                 f.write("\n")
+
+class TestPymarkdownroh_Lists(unittest.TestCase):
+    """Test lists of pymarkdownroh module.."""
+
+    def setUp(self):
+        self.tests = TESTS
+
+    def test_list(self):
+        for i in range(len(TESTS["LISTS"])):
+            if TESTS["LISTS"][i][1] == True and TESTS["LISTS"][i][2] == False :
+                self.assertEqual(create_list(TESTS["LISTS"][i][0],ordered=True), TESTS["LISTS_RESULT"][i])
+            elif TESTS["LISTS"][i][1] == False and TESTS["LISTS"][i][2] == True:
+                self.assertEqual(create_list(TESTS["LISTS"][i][0],checklist=True), TESTS["LISTS_RESULT"][i])
+            elif TESTS["LISTS"][i][1] == True and TESTS["LISTS"][i][2] == True:
+                self.assertEqual(create_list(TESTS["LISTS"][i][0],ordered=True, checklist=True), TESTS["LISTS_RESULT"][i])        
+            else:
+                self.assertEqual(create_list(TESTS["LISTS"][i][0]), TESTS["LISTS_RESULT"][i])
+
 
 if __name__ == '__main__':
     # Verbose unittests.
