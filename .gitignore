@@ -1,7 +1,9 @@
-vscode
+.vscode
 env
 TODO
 CHANGES
 __pycache__
 Backup.txt
 examples
+*.egg*
+dist
