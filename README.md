@@ -2,9 +2,9 @@
 <!-- toc:insertAfterHeadingOffset=4 -->
 
 ![PyPI - Version](https://img.shields.io/pypi/v/pymarkdownroh)
-![PyPI - License](https://img.shields.io/pypi/l/pymarkdownroh)
+![GitHub License](https://img.shields.io/github/license/IT-Administrators/pymarkdownroh)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/pymarkdownroh)
-[![Publish PyPi](https://github.com/IT-Administrators/pymarkdownroh/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/IT-Administrators/pymarkdownroh/actions/workflows/release.yml)
+[![Publish PyPi](https://github.com/IT-Administrators/pymarkdownroh/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/IT-Administrators/pymarkdownroh/actions/workflows/release.yml)
 [![CI](https://github.com/IT-Administrators/pymarkdownroh/actions/workflows/ci.yaml/badge.svg)](https://github.com/IT-Administrators/pymarkdownroh/actions/workflows/ci.yaml)
 
 # pymarkdownroh
