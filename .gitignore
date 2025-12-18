@@ -4,6 +4,8 @@ TODO
 CHANGES
 __pycache__
 Backup.txt
-examples
+examples/*.md
+examples/*.png
+examples/*.txt
 *.egg*
 dist
