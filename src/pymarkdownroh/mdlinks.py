@@ -7,7 +7,7 @@ import re
 class MDLink:
     """Class for creating different kinds of links."""
 
-    def __init__(self, linktext:str = "An Example", url:str = "https://www.example.com", title: Optional[str] = "Example", linkname: int | str = 1):
+    def __init__(self, linktext:str, url:str , title: Optional[str], linkname: str | int = 1):
         self.linktext = linktext
         self.url = url
         self.title = title
