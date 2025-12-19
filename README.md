@@ -9,7 +9,7 @@
 
 # pymarkdownroh
 
-_The pymarkdownroh package contains pyhton modules to create markdown text from python scripts._
+_The pymarkdownroh package contains python modules to create markdown text from python scripts._
 
 
 ## Table of Contents
