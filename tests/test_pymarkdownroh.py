@@ -91,7 +91,13 @@ string."""],
                      "1. Programming Languages\n    1. Python\n    1. JavaScript\n    1. Rust\n1. Databases\n    1. PostgreSQL\n    1. MongoDB",
                      "- [x] Install Python\n- [ ] Set up virtualenv\n- [ ] Project Setup\n    - [x] Create repo\n    - [ ] Write README\n- [ ] Push to GitHub",
                      "1. [ ] Book flights\n1. [x] Reserve hotel\n1. [ ] Packing\n    1. [ ] Clothes\n    1. [x] Toiletries\n    1. [ ] Laptop\n1. [ ] Check-in online",
-    ]
+    ],
+
+    # simple table tests - headers, values, alignments, expected output
+    "TABLE_HEADERS": ["h1","h2","h3"],
+    "TABLE_VALUES": [["a","b","c"],["d","e","f"]],
+    "TABLE_ALIGNMENTS": ["left","center","right"],
+    "TABLE_RESULT": ["| h1 | h2 | h3 |\n| :-- | :-: | --: |\n| a | b | c |\n| d | e | f |"],
     }
 
 EXAMPLEFILES = {
@@ -101,8 +107,8 @@ EXAMPLEFILES = {
     "HEADLINES": "./examples/HEADLINES.md",
     "IMAGES": "./examples/IMAGES.md",
     "LINKS": "./examples/LINKS.md",
-    "LISTS": "./example/LISTS.md"
-    # "TABLES": "./examples/TABLES.md"
+    "LISTS": "./example/LISTS.md",
+    "TABLES": "./examples/TABLES.md"
 }
 
 class TestPymarkdownroh_Emphasizing(unittest.TestCase):
@@ -268,6 +274,35 @@ class TestPymarkdownroh_Lists(unittest.TestCase):
                 self.assertEqual(create_list(TESTS["LISTS"][i][0],ordered=True, checklist=True), TESTS["LISTS_RESULT"][i])        
             else:
                 self.assertEqual(create_list(TESTS["LISTS"][i][0]), TESTS["LISTS_RESULT"][i])
+
+
+class TestPymarkdownroh_Tables(unittest.TestCase):
+    """Verify automatic table generation including column alignments."""
+
+    def setUp(self):
+        self.tests = TESTS
+
+    def test_table_default_alignment(self):
+        # default should behave exactly like explicit left alignment
+        headers = TESTS["TABLE_HEADERS"]
+        values = TESTS["TABLE_VALUES"]
+        result = create_table(headers, values)
+        expected = create_table(headers, values, alignments=["left"] * len(headers))
+        self.assertEqual(result, expected)
+
+    def test_table_with_alignments(self):
+        headers = TESTS["TABLE_HEADERS"]
+        values = TESTS["TABLE_VALUES"]
+        aligns = TESTS["TABLE_ALIGNMENTS"]
+        result = create_table(headers, values, alignments=aligns)
+        lines = result.splitlines()
+        # header row should exactly match
+        self.assertEqual(lines[0], "| h1 | h2 | h3 |")
+        # separator row should use the correct alignment markers
+        self.assertEqual(lines[1], "| :-- | :-: | --: |")
+        # subsequent rows must start with the data values (padding is allowed)
+        self.assertTrue(lines[2].startswith("| a"))
+        self.assertTrue(lines[3].startswith("| d"))
 
 
 if __name__ == '__main__':

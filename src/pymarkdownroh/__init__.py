@@ -18,3 +18,4 @@ from .mdcode import create_code_span
 from .mdlinks import MDLink, create_automatic_link
 from .mdimages import MDImage
 from .mdlists import create_list
+from .mdtables import create_table

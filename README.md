@@ -30,7 +30,7 @@ This package contains different modules which enable users to write markdown tex
 
 The intention of this package is to automatically write markdown files using scripts with templates.
 
-Currently it does not support extended functionality like tables which are often used in github flavored markdown.
+Now it supports extended functionality like tables which are often used in github flavored markdown.
 
 ## Getting started
 
@@ -93,6 +93,24 @@ print(create_list(l, True, True))
 # 1. [] Apples
 # 2. [] Bananas
 # 3. [] Cherries
+```
+
+```python
+from pymarkdownroh import create_table
+
+table = create_table(
+    ["Name", "Age"],
+    [["Alice", "23"], ["Bob", "30"]],
+    alignments=["left", "right"],
+)
+print(table)
+
+# Output:
+#
+# | Name  | Age |
+# | :---- | --: |
+# | Alice |  23 |
+# | Bob   |  30 |
 ```
 
 ## Releasing
