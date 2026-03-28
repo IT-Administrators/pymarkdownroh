@@ -1,4 +1,4 @@
-name: Publish Python Package TestPyPi
+name: Publish TestPyPi
 
 permissions:
   contents: write
@@ -99,7 +99,7 @@ jobs:
         run: python3 -m build
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: python-package-distributions
           path: dist/
